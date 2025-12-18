@@ -7,6 +7,22 @@ const app = new express();
 // Initialize an array to store login details
 let loginDetails = [];
 
+// List of months
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 // Define the root route to send a welcome message
 app.get("/", (req, res) => {
   res.send("Welcome to the express server");
@@ -26,6 +42,19 @@ app.post("/login/:name", (req, res) => {
 // Define a dynamic route to greet users by name
 app.get("/:name", (req, res) => {
   res.send("Hello " + req.params.name);
+});
+
+// Define an endpoint to get particular month
+app.get("/fetchMonth/:num", (req, res) => {
+  const number = parseInt(req.params.num);
+  if (number < 13 && number > 0) {
+    const month = months[number - 1];
+    res.send(`Month: ${month}`);
+  } else {
+    res.send(
+      `Number ${req.params.num} does not correspond to a particular month`
+    );
+  }
 });
 
 // Start the server and listen on port 3333
